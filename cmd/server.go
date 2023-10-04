@@ -1,10 +1,13 @@
 package cmd
 
 import (
-	"fmt"
+	"github.com/auth-service/api"
 	"github.com/auth-service/db"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
-	"time"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 var cmdServer = &cobra.Command{
@@ -12,19 +15,18 @@ var cmdServer = &cobra.Command{
 	Short: "To start api server",
 	Run: func(cmd *cobra.Command, args []string) {
 		db.InitPostgress()
-		for i := 1; i < 10000; i++ {
-			go func() {
-				_, err := db.GetUserCredentialsByUserName(fmt.Sprintf("user%d", i*i))
-				if err != nil {
-					panic(err)
-				}
-			}()
+		go api.StartServer()
+		sigs := make(chan os.Signal, 1)
+		signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
+
+		// Select on error channels from different modules
+		for {
+			select {
+			case sig := <-sigs:
+				log.Info().Msgf("Got signal, beginning shutdown", "signal", sig)
+				os.Exit(1)
+			}
 		}
-
-		time.Sleep(20 * time.Second)
-
-		//fmt.Printf("%#v", user)
-		//fmt.Println("hello world 3")
 	},
 }
 

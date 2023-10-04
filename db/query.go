@@ -11,6 +11,27 @@ import (
 	"time"
 )
 
+func IsUserExists(username string) (bool, error) {
+	var exists bool
+	err := DBPool.QueryRow(context.Background(), "SELECT EXISTS(SELECT 1 FROM user_credentials WHERE username = $1)", username).Scan(&exists)
+	if err != nil {
+		return false, fmt.Errorf("error checking if user exists: %v", err)
+	}
+
+	return exists, nil
+}
+
+func CreateNewUSer(user types.UserRegister, hash, access string) error {
+	query := `INSERT INTO user_credentials (first_name, last_name, username, hash_id, access_token)
+	VALUES ($1, $2, $3, $4, $5)`
+	_, err := DBPool.Exec(context.Background(), query, user.FirstName, user.LastName, user.UserName, hash, access)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func GetUserCredentialsByUserName(userName string) (*types.UserCred, error) {
 	t := time.Now()
 	query := "SELECT user_id, username, first_name, last_name, hash_id, access_token FROM user_credentials WHERE username = $1"
