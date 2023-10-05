@@ -15,3 +15,13 @@ type UserRegister struct {
 	UserName  string `json:"user_name"`
 	Password  string `json:"password"`
 }
+
+type AdminCredential struct {
+	AdminID           int    `json:"admin_id"`
+	AdminUser         string `json:"admin_user"`
+	AdminPassword     string `json:"admin_password"`
+	AdminPasswordHash string `json:"admin_password_hash"`
+	IsSuperAdmin      bool   `json:"is_super_admin"`
+	AccessToken       string `json:"access_token"`
+	IsApproved        bool   `json:"is_approved"`
+}
