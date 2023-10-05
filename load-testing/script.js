@@ -10,7 +10,7 @@ const usersData = JSON.parse(open(USERS_DATA_FILE));
 export let options = {
     stages: [
         { duration: '5s', target: 1000 }, // Ramp-up to 1,000 users in 5 seconds
-        { duration: '10s', target: 1000 }, // Stay at 1,000 users for 1 minute
+        { duration: '1m', target: 1000 }, // Stay at 1,000 users for 1 minute
     ],
 };
 
