@@ -2,7 +2,7 @@
 
 This document outlines the APIs provided by the Authentication Service for user and admin management.
 1. have created aws RDS Instance and populated it with 5 million users dummy data 
-2. deploy application in aws-ec2 instance 
+2. deploy application in aws-ec2 instance having 1 vCPU
 3. utilize k6 for load testing 
 
 ## Table of Contents
