@@ -15,7 +15,7 @@ This document outlines the APIs provided by the Authentication Service for user 
     - [Admin Login](#admin-login)
     - [Admin Approval](#admin-approval)
     - [Find Users](#find-users)
-    - [Stress Test Result](#k6-report-for-1000-concurrent-virtual-users-for-1-minute-)
+- [Stress Test Result](#k6-report-for-1000-concurrent-virtual-users-for-1-minute-)
 
 ---
 
